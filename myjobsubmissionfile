@@ -8,12 +8,18 @@
 
 #If more convenient, you may also specify any command line options to sbatch from within your job submission file, using a special form of comment:
 # JOB HEADERS HERE
-###SBATCH --account yunglu
+#  1. number and type of resources you want
 #SBATCH --ntasks=1 --cpus-per-task=1
 #SBATCH --nodes=1 --gpus-per-node=1 
-#SBATCH --time=0:01:00
+#  2.The partition where the resources are located
+#SBATCH --partition=a10
+#  3.The account the resources should come out of
+###SBATCH --account yunglu
+#  4.The quality of service (QOS) this job expects from the resources
 #SBATCH --qos=standby
-#SBATCH --job-name richardli_myjobname
+#  5. other
+#SBATCH --time=0:01:00
+#SBATCH --job-name richardli_StatusChecker
 ##SBATCH --output=/home/li5042/joboutput/myjob.out
 
 #note: If an option is present in both your job submission file and on the command line, the option on the command line will take precedence.
