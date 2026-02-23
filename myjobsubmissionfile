@@ -1,0 +1,93 @@
+#!/bin/bash
+# FILENAME:  myjobsubmissionfile
+
+#submitting job: 
+#https://www.rcac.purdue.edu/knowledge/gilbreth/run/slurm/submit
+#$ sbatch --nodes=1 --gpus-per-node=1 myjobsubmissionfile 
+#$ sbatch -t 0:05:00 --nodes=1 --gpus-per-node=1 myjobsubmissionfile 
+
+#If more convenient, you may also specify any command line options to sbatch from within your job submission file, using a special form of comment:
+###SBATCH -A myqueuename
+#SBATCH --ntasks=1 --cpus-per-task=1
+#SBATCH --nodes=1 --gpus-per-node=1 
+#SBATCH --time=0:01:00
+#SBATCH --job-name richardli_myjobname
+##SBATCH --output=/home/li5042/joboutput/myjob.out
+
+#note: If an option is present in both your job submission file and on the command line, the option on the command line will take precedence.
+#After you submit your job with SBATCH, it may wait in queue for minutes, hours, or even weeks. How long it takes for a job to start depends on the specific queue, the resources and time requested, and other jobs already waiting in that queue requested as well. It is impossible to say for sure when any given job will start. For best results, request no more resources than your job requires.
+
+
+
+
+# Loads Matlab and sets the application up
+#module load matlab
+
+# Print the hostname of the compute node on which this job is running.
+/bin/hostname
+
+# Show this ran on a compute node by running the hostname command.
+hostname
+
+# Change to the directory from which you originally submitted this job.
+#cd $SLURM_SUBMIT_DIR
+#without this: 
+    #After your job finishes running, the ls command will 
+    #show a new file in your directory, the .out file:
+    #contains the output and errors your program would 
+    #have written to the screen if you had typed its commands 
+    #at a command prompt:
+
+
+
+
+# Print the hostname of the compute node on which this job is running.
+/bin/hostname
+
+
+#monitor usage: 
+#https://www.rcac.purdue.edu/knowledge/gilbreth/run/examples/slurm/monitor
+module load monitor
+
+# track GPU load
+monitor gpu percent >gpu-percent.log &
+GPU_PID=$!
+
+# track CPU load
+monitor cpu percent >cpu-percent.log &
+CPU_PID=$!
+
+
+#============================================================================
+
+# Runs a Matlab script named 'myscript'
+#matlab -nodisplay -singleCompThread -r myscript
+
+#echo "hello world"
+echo "hello world"
+echo "hello world" > output.txt
+
+# see env configs
+#https://www.rcac.purdue.edu/knowledge/gilbreth/run/slurm/script
+#SLURM_SUBMIT_DIR	Absolute path of the current working directory when you submitted this job
+#SLURM_JOBID	Job ID number assigned to this job by the batch system
+#SLURM_JOB_NAME	Job name supplied by the user
+#SLURM_JOB_NODELIST	Names of nodes assigned to this job
+#SLURM_CLUSTER_NAME	Name of the cluster executing the job
+#SLURM_SUBMIT_HOST	Hostname of the system where you submitted this job
+#SLURM_JOB_PARTITION	Name of the original queue to which you submitted this job
+echo "SLURM_SUBMIT_DIR: $SLURM_SUBMIT_DIR" >> output.txt
+echo "SLURM_JOBID: $SLURM_JOBID" >> output.txt
+echo "SLURM_JOB_NAME: $SLURM_JOB_NAME" >> output.txt
+echo "SLURM_JOB_NODELIST: $SLURM_JOB_NODELIST" >> output.txt
+echo "SLURM_CLUSTER_NAME: $SLURM_CLUSTER_NAME" >> output.txt
+echo "SLURM_SUBMIT_HOST: $SLURM_SUBMIT_HOST" >> output.txt
+echo "SLURM_JOB_PARTITION: $SLURM_JOB_PARTITION" >> output.txt
+
+
+#============================================================================
+
+monitor gpu memory --csv >gpu-memory.csv
+
+# shut down the resource monitors
+kill -s INT $GPU_PID $CPU_PID
