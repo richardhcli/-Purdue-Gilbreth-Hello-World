@@ -67,6 +67,11 @@ GPU_PID=$!
 monitor cpu percent >cpu-percent.log &
 CPU_PID=$!
 
+#track GPU memory as csv
+# Add the '&' to run in the background, then capture the PID
+monitor gpu memory --csv >gpu-memory.csv & 
+MEM_PID=$!
+
 
 #============================================================================
 
@@ -97,9 +102,6 @@ echo "SLURM_JOB_PARTITION: $SLURM_JOB_PARTITION" >> output.txt
 
 #============================================================================
 
-# Add the '&' to run in the background, then capture the PID
-monitor gpu memory --csv >gpu-memory.csv & 
-MEM_PID=$!
 
 #If you leave a monitor running in the foreground without backgrounding it, your Slurm job will likely just hang until it reaches the walltime limit you requested in your #SBATCH headers, wasting your allocation and preventing your job from finishing cleanly.
 # shut down all the resource monitors by including the new MEM_PID
