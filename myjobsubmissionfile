@@ -19,7 +19,8 @@
 #  4.The quality of service (QOS) this job expects from the resources (NECESSARY)
 #SBATCH --qos=standby
 #  5. other
-#SBATCH --time=0:01:00
+#SBATCH --time=0:05:00
+#Looks like --time=0:01:00 one minute is too slow... 
 #SBATCH --job-name richardli_StatusChecker
 ##SBATCH --output=/home/li5042/joboutput/myjob.out
 
