@@ -8,15 +8,15 @@
 
 #If more convenient, you may also specify any command line options to sbatch from within your job submission file, using a special form of comment:
 # JOB HEADERS HERE
-#  1. number and type of resources you want
+#  1. number and type of resources you want (NECESSARY)
 #SBATCH --ntasks=1 --cpus-per-task=1
 #SBATCH --nodes=1 --gpus-per-node=1 
 #SBATCH --mem=1G
-#  2.The partition where the resources are located
+#  2.The partition where the resources are located (NECESSARY)
 #SBATCH --partition=a10
-#  3.The account the resources should come out of
-###SBATCH --account yunglu
-#  4.The quality of service (QOS) this job expects from the resources
+#  3.The account the resources should come out of (NECESSARY)
+#SBATCH --account yunglu
+#  4.The quality of service (QOS) this job expects from the resources (NECESSARY)
 #SBATCH --qos=standby
 #  5. other
 #SBATCH --time=0:01:00
