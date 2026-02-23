@@ -11,6 +11,7 @@
 #  1. number and type of resources you want
 #SBATCH --ntasks=1 --cpus-per-task=1
 #SBATCH --nodes=1 --gpus-per-node=1 
+#SBATCH --mem=1G
 #  2.The partition where the resources are located
 #SBATCH --partition=a10
 #  3.The account the resources should come out of
