@@ -3,14 +3,16 @@
 
 #submitting job: 
 #https://www.rcac.purdue.edu/knowledge/gilbreth/run/slurm/submit
-#$ sbatch --nodes=1 --gpus-per-node=1 myjobsubmissionfile 
-#$ sbatch -t 0:05:00 --nodes=1 --gpus-per-node=1 myjobsubmissionfile 
+# $ sbatch --nodes=1 --gpus-per-node=1 myjobsubmissionfile 
+# $ sbatch -t 0:05:00 --nodes=1 --gpus-per-node=1 myjobsubmissionfile 
 
 #If more convenient, you may also specify any command line options to sbatch from within your job submission file, using a special form of comment:
-###SBATCH -A myqueuename
+# JOB HEADERS HERE
+###SBATCH --account yunglu
 #SBATCH --ntasks=1 --cpus-per-task=1
 #SBATCH --nodes=1 --gpus-per-node=1 
 #SBATCH --time=0:01:00
+#SBATCH --qos=standby
 #SBATCH --job-name richardli_myjobname
 ##SBATCH --output=/home/li5042/joboutput/myjob.out
 
